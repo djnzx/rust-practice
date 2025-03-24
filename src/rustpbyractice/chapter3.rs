@@ -1,4 +1,13 @@
 /// https://practice.course.rs/variables.html
+
+#[test]
+fn test30() {
+    let x = 5;
+    let y = 2 + 3;
+
+    assert_eq!(x, y);
+}
+
 #[test]
 fn test31() {
     let x: i32 = 5;
