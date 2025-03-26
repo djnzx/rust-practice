@@ -1,0 +1,48 @@
+muxa * x + a == slon
+use std::collections::HashSet;
+
+// Перевіряємо умову на рівність
+fn is_solution(muxa: i32, x: i32, a: i32, slon: i32) -> bool {
+    muxa * x + a == slon
+}
+
+// Перетворення в число з букв
+fn letters_to_number(letters: &[i32], indices: &[usize]) -> i32 {
+    indices.iter().fold(0, |acc, &i| acc * 10 + letters[i])
+}
+
+// Пошук рішень
+fn find_solutions() {
+    let digits: Vec<i32> = (0..10).collect();
+    let mut used = HashSet::new();
+
+    // Перебираємо всі можливі комбінації
+    for &m in &digits {
+        for &u in &digits {
+            if used.contains(&u) { continue; }
+            for &x in &digits {
+                if used.contains(&x) { continue; }
+                for &a in &digits {
+                    if used.contains(&a) { continue; }
+                    for &s in &digits {
+                        for &l in &digits {
+                            for &o in &digits {
+                                for &n in &digits {
+                                    let muxa = m * 1000 + u * 100 + x * 10 + a;
+                                    let slon = s * 1000 + l * 100 + o * 10 + n;
+                                    if is_solution(muxa, x, a, slon) {
+                                        println!("muxa = {}, slon = {}", muxa, slon);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+fn main() {
+    find_solutions();
+}
