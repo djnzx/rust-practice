@@ -1,0 +1,20 @@
+fn is_antipalindrome(num: i32) -> bool {
+    let num_str = num.to_string();
+    let len = num_str.len();
+    
+    for i in 0..len / 2 {
+        if num_str.chars().nth(i) == num_str.chars().nth(len - i - 1) {
+            return false;
+        }
+    }
+    true
+}
+
+fn main() {
+    let number = 12345;
+    if is_antipalindrome(number) {
+        println!("Число {} є антипаліндромом.", number);
+    } else {
+        println!("Число {} не є антипаліндромом.", number);
+    }
+}
