@@ -1,0 +1,23 @@
+fn count_permutation(shipments: &Vec<u32>) -> usize {
+    let total: u32 = shipments.iter().sum(); // Загальна кількість вантажу
+    let n = shipments.len() as u32; // Кількість кораблів
+
+    // Якщо загальна кількість вантажу не ділиться на кількість кораблів
+    if total % n != 0 {
+        return 0; // неможливо рівномірно розподілити вантаж
+    }
+
+    let target = total / n; // Цільова кількість вантажу на кожному кораблі
+    let mut transfers: usize = 0; // Лічильник перенесень
+    let mut balance: i32 = 0; // Баланс для відстеження різниці між кораблями
+
+    // Проходимо по кожному кораблю
+    for &shipment in shipments.iter() {
+        // Різниця між поточним вантажем і цільовим
+        balance += shipment as i32 - target as i32;
+        // Кількість перенесень збільшується на модуль балансу
+        transfers += balance.abs() as usize;
+    }
+
+    transfers
+}
