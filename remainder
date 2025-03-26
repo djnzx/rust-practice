@@ -1,0 +1,26 @@
+fn gen_shipments(n: usize) -> Vec<u32> {
+    // Створюємо вектор розміру 32, спочатку заповнений нулями
+    let mut shipments = vec![0u32; 32];
+    
+    // Розраховуємо скільки одиниць припадає на кожен елемент
+    let base = (n / 32) as u32;
+    let remainder = (n % 32) as u32;
+
+    // Присвоюємо базове значення всім елементам
+    for item in shipments.iter_mut() {
+        *item = base;
+    }
+
+    // Розподіляємо залишок серед перших `remainder` елементів
+    for i in 0..remainder {
+        shipments[i as usize] += 1;
+    }
+
+    shipments
+}
+
+fn main() {
+    let n = 100;
+    let shipments = gen_shipments(n);
+    println!("{:?}", shipments);
+}
