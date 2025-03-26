@@ -1,0 +1,46 @@
+fn count_permutation(shipments: &Vec<u32>) -> usize {
+    let n = shipments.len();
+    let total: u32 = shipments.iter().sum();
+    
+    // Перевірка, чи можна рівномірно розподілити вантаж
+    if total as usize % n != 0 {
+        panic!("Неможливо розподілити вантаж рівномірно.");
+    }
+    
+    let avg = total / n as u32;
+    let mut imbalance = 0;
+
+    // Рахуємо кількість переміщень вантажу
+    for &shipment in shipments {
+        if shipment > avg {
+            imbalance += shipment - avg;
+        }
+    }
+    
+    imbalance as usize
+}
+
+use rand::Rng;
+
+fn gen_shipments(n: usize) -> Vec<u32> {
+    let mut rng = rand::thread_rng();
+    let avg_load = rng.gen_range(10..50); // Випадкове середнє значення
+    let mut shipments: Vec<u32> = (0..n).map(|_| rng.gen_range(avg_load - 5..avg_load + 5)).collect();
+    
+    // Коригуємо загальну суму, щоб вона ділилася на кількість кораблів
+    let total: u32 = shipments.iter().sum();
+    let remainder = total % n as u32;
+
+    if remainder != 0 {
+        shipments[0] += n as u32 - remainder;
+    }
+
+    shipments
+}
+
+fn main() {
+    let shipments = gen_shipments(5);
+    println!("Shipments: {:?}", shipments);
+    let moves = count_permutation(&shipments);
+    println!("Minimum moves: {}", moves);
+}
