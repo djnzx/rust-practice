@@ -1,0 +1,41 @@
+use rand::Rng; // Не забудьте додати crate "rand" у вашому Cargo.toml
+use std::fmt;
+
+fn gen_random_vector(n: usize) -> Vec<i32> {
+    let mut rng = rand::thread_rng();
+    (0..n).map(|_| rng.gen_range(10..100)).collect()
+}
+
+fn min_adjacent_sum(data: &[i32]) -> Option<(i32, i32)> {
+    if data.len() < 2 {
+        return None; // Якщо вектор менше 2, немає сусідніх елементів
+    }
+
+    let mut min_sum = i32::MAX;
+    let mut min_pair = (0, 0);
+
+    for window in data.windows(2) {
+        let sum = window[0] + window[1];
+        if sum < min_sum {
+            min_sum = sum;
+            min_pair = (window[0], window[1]);
+        }
+    }
+
+    Some(min_pair)
+}
+
+fn print_min_adjacent_sum(data: &[i32]) {
+    match min_adjacent_sum(data) {
+        Some((a, b)) => println!("Мінімальна пара сусідніх елементів: ({}, {})", a, b),
+        None => println!("Не вдалося знайти сусідні елементи."),
+    }
+}
+
+fn main() {
+    let vector = gen_random_vector(20);
+    println!("Згенерований вектор: {:?}", vector);
+    print_min_adjacent_sum(&vector);
+}
+[dependencies]
+rand = "0.8" // або остання версія
