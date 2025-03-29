@@ -1,0 +1,45 @@
+struct Rectangle {
+    x: i32,
+    y: i32,
+    width: i32,
+    height: i32,
+}
+
+impl Rectangle {
+    fn area(&self) -> i32 {
+        self.width * self.height
+    }
+
+    // Функція для знаходження площі перекриття
+    fn intersection_area(&self, other: &Rectangle) -> i32 {
+        let x_overlap = (self.x + self.width).min(other.x + other.width) - self.x.max(other.x);
+        let y_overlap = (self.y + self.height).min(other.y + other.height) - self.y.max(other.y);
+
+        if x_overlap > 0 && y_overlap > 0 {
+            x_overlap * y_overlap
+        } else {
+            0
+        }
+    }
+}
+
+fn main() {
+    let red_rect = Rectangle { x: 0, y: 0, width: 6, height: 3 };
+    let green_rect = Rectangle { x: 6, y: 0, width: 2, height: 10 };
+    let blue_rect = Rectangle { x: 2, y: 3, width: 8, height: 4 };
+
+    // Обчислення площ окремих прямокутників
+    let total_area = red_rect.area() + green_rect.area() + blue_rect.area();
+    println!("Загальна площа окремих прямокутників: {}", total_area);
+
+    // Обчислення площі перекриття
+    let overlap_red_green = red_rect.intersection_area(&green_rect);
+    let overlap_red_blue = red_rect.intersection_area(&blue_rect);
+    let overlap_green_blue = green_rect.intersection_area(&blue_rect);
+
+    let total_overlap_area = overlap_red_green + overlap_red_blue + overlap_green_blue;
+    println!("Загальна площа перекриття: {}", total_overlap_area);
+
+    let total_occupied_area = total_area - total_overlap_area;
+    println!("Фактична площа, яку займають прямокутники разом: {}", total_occupied_area);
+}
