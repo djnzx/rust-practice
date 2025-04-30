@@ -9,7 +9,6 @@ fn rotate(s: String, n: isize) -> String {
     let split_index = len - shift;
     let (left, right) = s.split_at(split_index as usize);
 
-    // Склеюємо новий рядок
     format!("{}{}", right, left)
 }
 fn main() {
