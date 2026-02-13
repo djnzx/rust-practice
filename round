@@ -1,0 +1,20 @@
+fn gen_shipments(mut shipments: Vec<u32>) -> u32 {
+    let n = shipments.len();
+    let sum: u32 = shipments.iter().sum();
+    let avg = (sum as f32 / n as f32).round() as u32;
+    let mut moves = 0;
+
+    for i in 0..n - 1 {
+        let diff = shipments[i] as i32 - avg as i32;
+        shipments[i + 1] = (shipments[i + 1] as i32 + diff) as u32;
+        moves += diff.abs() as u32;
+    }
+
+    moves
+}
+
+fn main() {
+    let shipments = vec![9, 3, 7, 2, 9];
+    let result = gen_shipments(shipments);
+    println!("{}", result); // Output: 7
+}
