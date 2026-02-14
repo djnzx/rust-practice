@@ -1,0 +1,25 @@
+def ascii_value(char: str) -> int:
+    """Повертає числове значення символу в таблиці ASCII."""
+    if len(char) != 1:
+        raise ValueError("Функція приймає лише один символ.")
+    return ord(char)
+def test_ascii_value():
+    assert ascii_value('A') == 65, "Тест 1: Значення 'A' повинно бути 65."
+    assert ascii_value('a') == 97, "Тест 2: Значення 'a' повинно бути 97."
+    assert ascii_value('0') == 48, "Тест 3: Значення '0' повинно бути 48."
+    assert ascii_value('!') == 33, "Тест 4: Значення '!' повинно бути 33."
+    assert ascii_value(' ') == 32, "Тест 5: Значення пробілу повинно бути 32."
+    
+    try:
+        ascii_value('AB')
+    except ValueError as e:
+        assert str(e) == "Функція приймає лише один символ.", "Тест 6: Помилка при введенні декількох символів."
+    
+    try:
+        ascii_value('')
+    except ValueError as e:
+        assert str(e) == "Функція приймає лише один символ.", "Тест 7: Помилка при введенні порожнього рядка."
+
+# Виклик тестів
+test_ascii_value()
+print("Всі тести пройдено успішно!")
