@@ -1,0 +1,27 @@
+fn count_permutation(shipments: &Vec<u32>) -> usize {
+    let total: u32 = shipments.iter().sum(); // Сумарна кількість вантажу
+    let n = shipments.len() as u32;
+
+    // Перевірка на те, чи можна рівномірно розподілити вантаж
+    if total % n != 0 {
+        panic!("Неможливо рівномірно розподілити вантаж між кораблями.");
+    }
+
+    let target = total / n; // Цільова кількість вантажу на кожному кораблі
+    let mut moves = 0; // Кількість переміщень
+    let mut imbalance = 0; // Тимчасовий дисбаланс на кожному етапі
+
+    // Обчислюємо дисбаланс вантажу
+    for &shipment in shipments {
+        imbalance += (shipment as i32 - target as i32);
+        moves += imbalance.abs() as usize; // Накопичуємо кількість переміщень
+    }
+
+    moves
+}
+
+fn main() {
+    let shipments = vec![10, 20, 30];
+    let result = count_permutation(&shipments);
+    println!("Мінімальна кількість переміщень: {}", result);
+}
