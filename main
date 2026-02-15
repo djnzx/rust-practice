@@ -1,0 +1,13 @@
+fn is_palindrome(n: i32) -> bool {
+    let str_n = n.to_string();
+    str_n == str_n.chars().rev().collect::<String>()
+}
+
+fn main() {
+    let number = 12321;
+    if is_palindrome(number) {
+        println!("{} є паліндромом.", number);
+    } else {
+        println!("{} не є паліндромом.", number);
+    }
+}
