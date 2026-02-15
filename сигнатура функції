@@ -1,0 +1,40 @@
+fn factorial(n: u64) -> u64 {
+    if n == 0 {
+        1
+    } else {
+        n * factorial(n - 1)
+    }
+}
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_factorial_0() {
+        assert_eq!(factorial(0), 1);
+    }
+
+    #[test]
+    fn test_factorial_1() {
+        assert_eq!(factorial(1), 1);
+    }
+
+    #[test]
+    fn test_factorial_5() {
+        assert_eq!(factorial(5), 120);
+    }
+
+    #[test]
+    fn test_factorial_10() {
+        assert_eq!(factorial(10), 3628800);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_factorial_negative() {
+        // Rust не підтримує негативні значення для u64, але якщо ми змінюємо тип,
+        // цей тест демонструє, як перевірити паніку.
+        factorial(-1); // це призведе до помилки компіляції.
+    }
+}
+cargo test
