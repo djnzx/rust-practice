@@ -1,0 +1,15 @@
+def is_ascii_char(char: str) -> bool:
+    """
+    Перевіряє, чи є символ ASCII (значення в діапазоні 0-127).
+    
+    :param char: Символ для перевірки.
+    :return: True, якщо символ ASCII, інакше False.
+    """
+def is_ascii_char(char: str) -> bool:
+    if len(char) != 1:
+        return False
+    return 0 <= ord(char) <= 127
+
+# Приклади використання
+print(is_ascii_char('A'))  # True
+print(is_ascii_char('ñ'))  # False
