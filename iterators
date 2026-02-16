@@ -1,0 +1,36 @@
+class TreeIterator:
+    def __init__(self, num_triangles):
+        self.num_triangles = num_triangles
+        self.current = 1
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current > self.num_triangles:
+            raise StopIteration
+        triangle = self.draw_triangle(self.current)
+        self.current += 1
+        return triangle
+
+    @staticmethod
+    def draw_triangle(level):
+        height = level + 1
+        width = 2 * height - 1
+        triangle = []
+        
+        for i in range(height):
+            spaces = ' ' * (width // 2 - i)
+            stars = '*' * (2 * i + 1)
+            triangle.append(spaces + stars)
+        
+        return "\n".join(triangle)
+
+def draw_tree(num_triangles):
+    tree_iterator = TreeIterator(num_triangles)
+    for triangle in tree_iterator:
+        print(triangle)
+
+# Задаємо кількість трикутників
+num_triangles = int(input("Введіть кількість трикутників для ялинки: "))
+draw_tree(num_triangles)
