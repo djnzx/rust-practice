@@ -1,0 +1,4 @@
+fn count_permutation(shipments: &[u32]) -> usize
+fn count_permutation(shipments: &Vec<u32>) -> i32
+fn count_permutation<I>(shipments: I) -> usize
+where I: IntoIterator<Item = u32>
