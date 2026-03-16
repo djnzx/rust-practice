@@ -1,0 +1,16 @@
+def draw_tree(levels):
+    # Генеруємо трикутники для ялинки
+    def triangles():
+        for level in range(levels):
+            width = 2 * level + 1
+            height = level + 1
+            for i in range(height):
+                yield ' ' * (width // 2 - i) + '*' * (2 * i + 1)
+
+    # Виводимо ялинку
+    for line in triangles():
+        print(line)
+
+# Конфігурація: кількість трикутників
+num_triangles = 5  # Змінюйте цю змінну для різної кількості трикутників
+draw_tree(num_triangles)
