@@ -1,0 +1,82 @@
+use std::cmp::{max, min};
+
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+struct Rectangle {
+    a: Point,
+    b: Point,
+}
+
+fn area_occupied(xs: &Vec<Rectangle>) -> i32 {
+    let mut x_points = vec![];
+    let mut y_points = vec![];
+
+    // Зберемо всі унікальні точки за X і Y
+    for rect in xs {
+        x_points.push(rect.a.x);
+        x_points.push(rect.b.x);
+        y_points.push(rect.a.y);
+        y_points.push(rect.b.y);
+    }
+
+    x_points.sort();
+    x_points.dedup();
+    y_points.sort();
+    y_points.dedup();
+
+    let mut total_area = 0;
+
+    // Пройдемо по всім унікальним парам відрізків по X та Y
+    for i in 0..x_points.len() - 1 {
+        for j in 0..y_points.len() - 1 {
+            let x1 = x_points[i];
+            let x2 = x_points[i + 1];
+            let y1 = y_points[j];
+            let y2 = y_points[j + 1];
+
+            // Перевіримо, чи цей квадрат перекривається з будь-яким з прямокутників
+            for rect in xs {
+                if x1 >= rect.a.x && x2 <= rect.b.x && y1 >= rect.b.y && y2 <= rect.a.y {
+                    // Якщо квадрат всередині одного з прямокутників, додаємо його площу
+                    total_area += (x2 - x1) * (y2 - y1);
+                    break;  // Можна не перевіряти інші прямокутники, якщо цей квадрат вже зайнятий
+                }
+            }
+        }
+    }
+
+    total_area
+}
+
+// Тестові дані
+fn test_data() -> Vec<Rectangle> {
+    vec![
+        Rectangle {
+            a: Point { x: 2, y: 9 },
+            b: Point { x: 5, y: 3 },
+        },
+        Rectangle {
+            a: Point { x: 1, y: 8 },
+            b: Point { x: 11, y: 6 },
+        },
+        Rectangle {
+            a: Point { x: 9, y: 10 },
+            b: Point { x: 13, y: 2 },
+        },
+    ]
+}
+
+// Тест
+fn area_occupied_test() {
+    let data = test_data();
+    let occupied = area_occupied(&data);
+    assert_eq!(occupied, 60);
+}
+
+fn main() {
+    area_occupied_test();
+    println!("Тест пройдено успішно!");
+}
